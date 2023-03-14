@@ -1,0 +1,33 @@
+CREATE DATABASE DEVICE;
+
+USE DEVICE;
+
+CREATE TABLE DEVICES(
+  DEVICEID INT NOT NULL AUTO_INCREMENT,
+  NAME VARCHAR(100) NOT NULL,
+  PRIMARY KEY (DEVICEID)
+);
+
+INSERT INTO DEVICES(
+  NAME
+) VALUES(
+  "BMK - 4"
+),
+(
+  "BMK - 6"
+),
+(
+  "MT - 5"
+),
+(
+  "MT - 21"
+),
+(
+  "MT - 22"
+),
+(
+  "MT - 23"
+),
+(
+  "MT - 24"
+);
