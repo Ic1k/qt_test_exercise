@@ -16,7 +16,11 @@ build: clean
 install: build
 
 
-
+sql:
+	cd /home/tls/Qt5.9.8/5.9.8/gcc_64/plugins/sqldrivers
+	qmake "LIBS+=-L/usr/lib/x86_64-linux-gnu -lmysqlclient" mysql.pro
+	make
+	make install
 uninstall:
 
 
