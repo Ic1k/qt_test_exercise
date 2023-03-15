@@ -2,6 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QDebug>
+#include <QSqlDatabase>
+#include <QSqlError>
 
 #include "controller/controller.h"
 
@@ -19,8 +22,16 @@ class MainWindow : public QMainWindow {
   MainWindow(Controller *controller, QWidget *parent = nullptr);
   ~MainWindow();
 
+
+private slots:
+    void on_btn_add_clicked();
+
+
+
+
  private:
   Controller *controller_;
+
   Ui::MainWindow *ui;
 };
 
