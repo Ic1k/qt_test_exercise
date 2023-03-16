@@ -11,6 +11,7 @@ CONFIG += c++17
 SOURCES += \
     main.cc \
     view/mainwindow.cc \
+    view/validation.cc \
     controller/controller.cc \
     model/model.cc
 
@@ -18,13 +19,15 @@ SOURCES += \
 
 HEADERS += \
         view/mainwindow.h \
+        view/validation.h \
         controller/controller.h \
         model/model.h
 
 
 
 FORMS += \
-    view/mainwindow.ui
+    view/mainwindow.ui \
+    view/validation.ui
 
 
 # Default rules for deployment.

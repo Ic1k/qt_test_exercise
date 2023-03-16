@@ -11,9 +11,9 @@ MainWindow::MainWindow(Controller *controller, QWidget *parent)
 
 
 
-qDebug()<<QSqlDatabase::drivers()<<"drivers\n";
-      QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
-      db.setDatabaseName("DEVICE");
+      qDebug()<<QSqlDatabase::drivers()<<"drivers\n";
+      db = QSqlDatabase::addDatabase("QMYSQL");
+      db.setDatabaseName("device");
       db.setHostName("172.17.0.2");
       db.setPort(3306);
       db.setUserName("root");
@@ -24,18 +24,23 @@ qDebug()<<QSqlDatabase::drivers()<<"drivers\n";
 
       } else { qDebug() << "open succefull\n"; }
 
+      model = new QSqlTableModel(this);
+      model->setEditStrategy(QSqlTableModel::OnManualSubmit);
+      ui->tableView->setModel(model);
 
-
-}
-
-
-
-void MainWindow::on_btn_add_clicked()
-{
-
-    qDebug()<<"Insert ";
+      model->setTable("devices");
+      model->select();
 
 }
+
+
+
+void MainWindow::on_btn_edit_clicked(){
+    va_ = new Validation(controller_);
+    va_->resize(800, 300);
+    va_->exec();
+}
+
 
 MainWindow::~MainWindow() { delete ui; }
 };  // namespace vega
