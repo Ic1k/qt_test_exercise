@@ -10,10 +10,10 @@ class Model {
  public:
   Model() {}
 
- void connectdb(QSqlDatabase *db);
+  void connectdb(QSqlDatabase *db);
+
  protected:
  private:
-
 };
 }  // namespace vega
 

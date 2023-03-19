@@ -2,10 +2,7 @@
 
 namespace vega {
 
-
-
 void Model::connectdb(QSqlDatabase *db) {
-
   *db = QSqlDatabase::addDatabase("QMYSQL");
   db->setDatabaseName("vega_db");
   db->setHostName("172.17.0.2");

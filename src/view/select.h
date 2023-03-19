@@ -1,11 +1,17 @@
 #ifndef SELECT_H
 #define SELECT_H
 
+#include <QCloseEvent>
 #include <QDebug>
 #include <QDialog>
-
-
-
+#include <QLabel>
+#include <QListWidget>
+#include <QPushButton>
+#include <QSqlDatabase>
+#include <QSqlError>
+#include <QSqlQuery>
+#include <QTabBar>
+#include <QtWidgets>
 
 class Select : public QDialog {
   Q_OBJECT
@@ -15,10 +21,18 @@ class Select : public QDialog {
   ~Select();
 
  protected:
+  void closeEvent(QCloseEvent *event);
+
  private slots:
+  void onItemClicked(QListWidgetItem *item);
+  void uploadFile();
+  void downloadFile();
 
  private:
-  QString value_;
+  QString deviceName;
+  QListWidget *listPdf;
+  QListWidget *listBin;
+  QListWidget *listProcess;
 };
 
 #endif  // SELECT_H
