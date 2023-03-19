@@ -10,27 +10,17 @@ CONFIG += c++17
 
 SOURCES += \
     main.cc \
-    view/mainwindow.cc \
-    view/validation.cc \
     controller/controller.cc \
-    model/model.cc
+    model/model.cc \
+    view/mainview.cc \
+    view/select.cc
 
 
 
 HEADERS += \
-        view/mainwindow.h \
-        view/validation.h \
         controller/controller.h \
-        model/model.h
+        model/model.h \
+        view/mainview.h \
+        view/select.h
 
 
-
-FORMS += \
-    view/mainwindow.ui \
-    view/validation.ui
-
-
-# Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target

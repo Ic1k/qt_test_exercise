@@ -1,14 +1,12 @@
-#include <QApplication>
-
 #include "controller/controller.h"
-#include "view/mainwindow.h"
+#include "model/model.h"
+#include "view/mainview.h"
 
 int main(int argc, char *argv[]) {
-  QApplication qapp(argc, argv);
-
+  QApplication q(argc, argv);
   vega::Model model;
   vega::Controller controller(&model);
-  vega::MainWindow main_windom(&controller);
-  main_windom.show();
-  return qapp.exec();
+  MainView mainView(&controller);
+  mainView.show();
+  return q.exec();
 }
