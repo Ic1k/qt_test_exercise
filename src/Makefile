@@ -4,12 +4,12 @@ all: clean build  run
 
 
 run:
-	cd build; ./Vega
+	cd build; ./Vega_absolut
 
 
 build: clean
 	mkdir build
-	cd build/; qmake ../Vega.pro
+	cd build/; qmake ../Vega_absolut.pro
 	make -C build/
 	cd build/; rm -rf *.o *.cpp *.cc *.h Makefile
 
