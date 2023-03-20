@@ -12,8 +12,17 @@ class Model {
 
   void connectdb(QSqlDatabase *db);
 
+
+//  struct idData {
+//      int value1;
+//      int value2;
+//      int value3;
+//  };
+
  protected:
  private:
+
+
 };
 }  // namespace vega
 

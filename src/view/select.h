@@ -24,12 +24,13 @@ class Select : public QDialog {
   void closeEvent(QCloseEvent *event);
 
  private slots:
-  void onItemClicked(QListWidgetItem *item);
+  void onProcessListClicked(QListWidgetItem *item);
   void uploadFile();
   void downloadFile();
 
  private:
   QString deviceName;
+  QString processName;
   QListWidget *listPdf;
   QListWidget *listBin;
   QListWidget *listProcess;

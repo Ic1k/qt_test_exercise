@@ -12,4 +12,6 @@ void Model::connectdb(QSqlDatabase *db) {
   db->setConnectOptions("MYSQL_OPT_RECONNECT=1");
 }
 
+
+
 }  // namespace vega
