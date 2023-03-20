@@ -12,12 +12,13 @@
 #include <QSqlQuery>
 #include <QTabBar>
 #include <QtWidgets>
+#include "../controller/select_controller.h"
 
 class Select : public QDialog {
   Q_OBJECT
 
  public:
-  explicit Select(QString value, QDialog *parent = nullptr);
+  explicit Select(QString value, vega::SelectController *selectController, QDialog *parent = nullptr);
   ~Select();
 
  protected:
@@ -29,6 +30,7 @@ class Select : public QDialog {
   void downloadFile();
 
  private:
+  vega::SelectController *selectController_;
   QString deviceName;
   QString processName;
   QListWidget *listPdf;

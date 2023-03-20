@@ -1,7 +1,8 @@
 #include "select.h"
 
-Select::Select(QString deviceName_, QDialog *parent)
+Select::Select(QString deviceName_, vega::SelectController *selectController, QDialog *parent)
     : QDialog(parent),
+      selectController_(selectController),
       deviceName(deviceName_)
 
 {
@@ -15,20 +16,7 @@ Select::Select(QString deviceName_, QDialog *parent)
           SLOT(onProcessListClicked(QListWidgetItem *)));
 
   // Заполнение списка процессов
-  QSqlQuery queryProcess;
-  queryProcess.prepare(
-      "SELECT p.name \
-         from data\
-         join processes p on data.process_id = p.id \
-         join devices d on data.device_id = d.id \
-        where d.name = ? \
-        group by p.name;");
-  queryProcess.addBindValue(deviceName);
-  queryProcess.exec();
-  while (queryProcess.next()) {
-    QString name = queryProcess.value(0).toString();
-    listProcess->addItem(name);
-  }
+   selectController_->fillListProcess(listProcess, deviceName);
 
  //  Левая часть формы. Заголовок и список процессов.
   QVBoxLayout *leftLayout = new QVBoxLayout();
@@ -68,45 +56,14 @@ Select::Select(QString deviceName_, QDialog *parent)
 // Разблокировка основного окна
 void Select::closeEvent(QCloseEvent *event) { event->accept(); }
 
-//Выбор элемента списка процессов
+// Выбор элемента списка процессов
 void Select::onProcessListClicked(QListWidgetItem *item) {
   processName = item->text();
 
-  // Заполнение списка PDF
-  QSqlQuery queryPdf;
-  queryPdf.prepare(
-      "SELECT f.name \
-                      from data \
-                       join processes p on data.process_id = p.id \
-                       join devices d on data.device_id = d.id \
-                       join files f on f.id = data.file_id \
-                       where d.name = ? AND p.name = ? AND f.name LIKE '%pdf'");
-  queryPdf.addBindValue(deviceName);
-  queryPdf.addBindValue(processName);
-  queryPdf.exec();
-  listPdf->clear();
-  while (queryPdf.next()) {
-    QString name = queryPdf.value(0).toString();
-    listPdf->addItem(name);
-  }
+// Заполнение списка PDF и BIN
+  selectController_->fillListPdfBin(listPdf,listBin, deviceName, processName);
 
-  // Заполнение списка BIN
-  QSqlQuery queryBin;
-  queryBin.prepare(
-      "SELECT f.name \
-                      from data \
-                       join processes p on data.process_id = p.id \
-                       join devices d on data.device_id = d.id \
-                       join files f on f.id = data.file_id \
-                       where d.name = ? AND p.name = ? AND f.name LIKE '%bin'");
-  queryBin.addBindValue(deviceName);
-  queryBin.addBindValue(processName);
-  queryBin.exec();
-  listBin->clear();
-  while (queryBin.next()) {
-    QString name = queryBin.value(0).toString();
-    listBin->addItem(name);
-  }
+
 }
 
 //Кнопка загрузки файла
@@ -118,58 +75,22 @@ void Select::uploadFile() {
   QStringList parts = pathFile.split("/");
   QString fileName = parts.at(parts.size() - 1);
 
-  //Добавление файла в таблицу
-  QSqlQuery queryUpload;
-  queryUpload.prepare("INSERT INTO files(name) VALUES (?)");
-  queryUpload.addBindValue(fileName);
-  queryUpload.exec();
 
-
-  //Добавление зависимостей файла в таблицу
-  int deviceId = -1;
-  QSqlQuery queryDeviceId;
-  queryDeviceId.prepare(
-      "select id \
-         from devices \
-        where name = :name");
-  queryDeviceId.bindValue(":name", deviceName);
-  queryDeviceId.exec();
-  if (queryDeviceId.next()) {
-    deviceId = queryDeviceId.value(0).toInt();
-  }
-
-  int processId = -1;
-  QSqlQuery queryProcessId;
-  queryProcessId.prepare(
-      "select id \
-         from processes \
-        where name = :name");
-  queryProcessId.bindValue(":name", processName);
-  queryProcessId.exec();
-  if (queryProcessId.next()) {
-    processId = queryProcessId.value(0).toInt();
-  }
-
-  int filesId = -1;
-  QSqlQuery queryFilesId;
-  queryFilesId.prepare(
-      "select max(id) \
-         from files");
-  queryFilesId.exec();
-  if (queryFilesId.next()) {
-    filesId = queryFilesId.value(0).toInt();
-  }
-
-  QSqlQuery query;
-  query.prepare(
-      "INSERT INTO data (device_id, process_id, file_id) \
-              VALUES (:deviceId, :processId, :filesId)");
-  query.bindValue(":deviceId", deviceId);
-  query.bindValue(":processId", processId);
-  query.bindValue(":filesId", filesId);
-  query.exec();
+if(fileName!=""){
+ selectController_->insertFilesToData(deviceName, processName,fileName);
+ selectController_->fillListPdfBin(listPdf,listBin, deviceName, processName);
 }
 
-void Select::downloadFile() { qDebug() << "2"; }
+
+}
+
+void Select::downloadFile() {
+    QString FileName = QFileDialog::getSaveFileName(
+                this, "Open a file",
+                QDir::homePath(), "");
+            if (!FileName.isNull() && !FileName.isEmpty()) {
+              qDebug() << FileName;
+            }
+ }
 
 Select::~Select() {}

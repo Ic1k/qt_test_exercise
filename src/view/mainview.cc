@@ -1,7 +1,11 @@
 #include "view/mainview.h"
+#include "select.h"
 
-MainView::MainView(vega::Controller* controller, QWidget* parent)
-    : QWidget(parent), controller_(controller) {
+MainView::MainView(vega::MainController* mainController, vega::SelectController *selectController, QWidget* parent)
+    : QWidget(parent),
+      mainController_(mainController),
+      selectController_(selectController)
+    {
   setGeometry(500, 500, 400, 300);
   auto mainBox = new QVBoxLayout();
   auto bottomBox = new QHBoxLayout();
@@ -9,7 +13,7 @@ MainView::MainView(vega::Controller* controller, QWidget* parent)
   auto selectBtn = new QPushButton("select", this);
   listWidget = new QListWidget();
 
-  controller_->connectdb(&db);
+  mainController_->connectdb(&db);
   checkConnectdb();
   fillQlist();
 
@@ -26,7 +30,7 @@ MainView::MainView(vega::Controller* controller, QWidget* parent)
 
 void MainView::closeApp() {
   QMessageBox::StandardButton reply = QMessageBox::question(
-      this, "Message", "Are you sure you want to quit?",
+      this, "Message", "Вы действительно хотите выйти?",
       QMessageBox::Yes | QMessageBox::No, QMessageBox::No);
   if (reply == QMessageBox::Yes) {
     qApp->quit();
@@ -37,7 +41,7 @@ void MainView::openWindomSelect() {
   QListWidgetItem* item = listWidget->currentItem();
   if (item) {
     QString deviceName = item->text();
-    Select* select = new Select(deviceName);
+    Select* select = new Select(deviceName, selectController_);
     select->exec();
   }
 }

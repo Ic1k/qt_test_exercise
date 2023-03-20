@@ -8,21 +8,23 @@
 #include <QSqlTableModel>
 #include <QtWidgets>
 
-#include "../controller/controller.h"
-#include "select.h"
+#include "../controller/main_controller.h"
+#include "../controller/select_controller.h"
+
 
 class MainView : public QWidget {
   Q_OBJECT
 
  public:
-  MainView(vega::Controller *controller, QWidget *parent = nullptr);
+  MainView(vega::MainController *mainController, vega::SelectController *SelectController, QWidget *parent = nullptr);
   ~MainView();
 
  private:
   void checkConnectdb();
   void fillQlist();
 
-  vega::Controller *controller_;
+  vega::MainController *mainController_;
+  vega::SelectController *selectController_;
   QSqlDatabase db;
   QSqlTableModel *model;
   QListWidget *listWidget;

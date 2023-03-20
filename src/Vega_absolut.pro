@@ -10,7 +10,8 @@ CONFIG += c++17
 
 SOURCES += \
     main.cc \
-    controller/controller.cc \
+    controller/main_controller.cc \
+    controller/select_controller.cc \
     model/model.cc \
     view/mainview.cc \
     view/select.cc
@@ -18,7 +19,8 @@ SOURCES += \
 
 
 HEADERS += \
-        controller/controller.h \
+        controller/main_controller.h \
+        controller/select_controller.h \
         model/model.h \
         view/mainview.h \
         view/select.h
