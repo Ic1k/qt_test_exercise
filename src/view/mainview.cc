@@ -1,11 +1,12 @@
 #include "view/mainview.h"
+
 #include "select.h"
 
-MainView::MainView(vega::MainController* mainController, vega::SelectController *selectController, QWidget* parent)
+MainView::MainView(vega::MainController* mainController,
+                   vega::SelectController* selectController, QWidget* parent)
     : QWidget(parent),
       mainController_(mainController),
-      selectController_(selectController)
-    {
+      selectController_(selectController) {
   setGeometry(500, 500, 400, 300);
   auto mainBox = new QVBoxLayout();
   auto bottomBox = new QHBoxLayout();

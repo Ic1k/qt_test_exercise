@@ -1,6 +1,7 @@
 #include "select.h"
 
-Select::Select(QString deviceName_, vega::SelectController *selectController, QDialog *parent)
+Select::Select(QString deviceName_, vega::SelectController *selectController,
+               QDialog *parent)
     : QDialog(parent),
       selectController_(selectController),
       deviceName(deviceName_)
@@ -16,9 +17,9 @@ Select::Select(QString deviceName_, vega::SelectController *selectController, QD
           SLOT(onProcessListClicked(QListWidgetItem *)));
 
   // Заполнение списка процессов
-   selectController_->fillListProcess(listProcess, deviceName);
+  selectController_->fillListProcess(listProcess, deviceName);
 
- //  Левая часть формы. Заголовок и список процессов.
+  //  Левая часть формы. Заголовок и список процессов.
   QVBoxLayout *leftLayout = new QVBoxLayout();
   leftLayout->addWidget(labelDevice);
   leftLayout->addWidget(listProcess);
@@ -50,8 +51,6 @@ Select::Select(QString deviceName_, vega::SelectController *selectController, QD
   centralLayout->addLayout(leftLayout);
   centralLayout->addLayout(rightLayout);
   this->setLayout(centralLayout);
-
-
 }
 // Разблокировка основного окна
 void Select::closeEvent(QCloseEvent *event) { event->accept(); }
@@ -60,37 +59,33 @@ void Select::closeEvent(QCloseEvent *event) { event->accept(); }
 void Select::onProcessListClicked(QListWidgetItem *item) {
   processName = item->text();
 
-// Заполнение списка PDF и BIN
-  selectController_->fillListPdfBin(listPdf,listBin, deviceName, processName);
-
-
+  // Заполнение списка PDF и BIN
+  selectController_->fillListPdfBin(listPdf, listBin, deviceName, processName);
 }
 
-//Кнопка загрузки файла
+// Кнопка загрузки файла
 void Select::uploadFile() {
-  //Диалоговое окно, получение полного адреса файла.
-  QString pathFile = QFileDialog::getOpenFileName(
-      this, tr("Open File"), QDir::homePath(), tr("PDF Files (*.pdf);;BIN Files (*.bin)"));
-  //Получение имени файла
+  // Диалоговое окно, получение полного адреса файла.
+  QString pathFile =
+      QFileDialog::getOpenFileName(this, tr("Open File"), QDir::homePath(),
+                                   tr("PDF Files (*.pdf);;BIN Files (*.bin)"));
+  // Получение имени файла
   QStringList parts = pathFile.split("/");
   QString fileName = parts.at(parts.size() - 1);
 
-
-if(fileName!=""){
- selectController_->insertFilesToData(deviceName, processName,fileName);
- selectController_->fillListPdfBin(listPdf,listBin, deviceName, processName);
-}
-
-
+  if (fileName != "") {
+    selectController_->insertFilesToData(deviceName, processName, fileName);
+    selectController_->fillListPdfBin(listPdf, listBin, deviceName,
+                                      processName);
+  }
 }
 
 void Select::downloadFile() {
-    QString FileName = QFileDialog::getSaveFileName(
-                this, "Open a file",
-                QDir::homePath(), "");
-            if (!FileName.isNull() && !FileName.isEmpty()) {
-              qDebug() << FileName;
-            }
- }
+  QString FileName =
+      QFileDialog::getSaveFileName(this, "Open a file", QDir::homePath(), "");
+  if (!FileName.isNull() && !FileName.isEmpty()) {
+    qDebug() << FileName;
+  }
+}
 
 Select::~Select() {}

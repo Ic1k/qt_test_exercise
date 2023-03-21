@@ -11,12 +11,12 @@
 #include "../controller/main_controller.h"
 #include "../controller/select_controller.h"
 
-
 class MainView : public QWidget {
   Q_OBJECT
 
  public:
-  MainView(vega::MainController *mainController, vega::SelectController *SelectController, QWidget *parent = nullptr);
+  MainView(vega::MainController *mainController,
+           vega::SelectController *SelectController, QWidget *parent = nullptr);
   ~MainView();
 
  private:

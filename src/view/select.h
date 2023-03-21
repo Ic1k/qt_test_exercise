@@ -12,13 +12,15 @@
 #include <QSqlQuery>
 #include <QTabBar>
 #include <QtWidgets>
+
 #include "../controller/select_controller.h"
 
 class Select : public QDialog {
   Q_OBJECT
 
  public:
-  explicit Select(QString value, vega::SelectController *selectController, QDialog *parent = nullptr);
+  explicit Select(QString value, vega::SelectController *selectController,
+                  QDialog *parent = nullptr);
   ~Select();
 
  protected:
