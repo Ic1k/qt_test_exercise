@@ -8,7 +8,7 @@ int main(int argc, char *argv[]) {
   vega::Model model;
   vega::MainController mainController(&model);
   vega::SelectController selectController(&model);
-  MainView mainView(&mainController,&selectController);
+  MainView mainView(&mainController, &selectController);
   mainView.show();
   return q.exec();
 }

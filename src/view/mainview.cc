@@ -16,7 +16,7 @@ MainView::MainView(vega::MainController* mainController,
 
   mainController_->connectdb(&db);
   checkConnectdb();
-  fillQlist();
+  mainController_->fillListDevices(listWidget);
 
   connect(closeBtn, &QPushButton::clicked, this, &MainView::closeApp);
   connect(selectBtn, &QPushButton::clicked, this, &MainView::openWindomSelect);
@@ -53,22 +53,6 @@ void MainView::checkConnectdb() {
              << db.lastError().driverText() << "\n";
   } else {
     qDebug() << "Connect succefull\n";
-  }
-}
-
-void MainView::fillQlist() {
-  QSqlQuery queryDevice;
-  queryDevice.prepare("SELECT name FROM devices");
-
-  if (!queryDevice.exec()) {
-    qDebug() << "Error executing query: " << queryDevice.lastError().text();
-  }
-
-  listWidget->clear();
-
-  while (queryDevice.next()) {
-    QString name = queryDevice.value(0).toString();
-    listWidget->addItem(name);
   }
 }
 

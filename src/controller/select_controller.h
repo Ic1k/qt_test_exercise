@@ -21,7 +21,6 @@ class SelectController {
     model_->insertFilesToData(deviceName, processName, fileName);
   }
 
- protected:
  private:
   Model *model_;
 };

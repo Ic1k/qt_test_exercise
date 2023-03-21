@@ -10,8 +10,6 @@ CONFIG += c++17
 
 SOURCES += \
     main.cc \
-    controller/main_controller.cc \
-    controller/select_controller.cc \
     model/model.cc \
     view/mainview.cc \
     view/select.cc

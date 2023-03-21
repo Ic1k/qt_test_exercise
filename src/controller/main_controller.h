@@ -8,8 +8,10 @@ class MainController {
  public:
   MainController(Model *model) : model_(model) {}
   void connectdb(QSqlDatabase *db) { model_->connectdb(db); }
+  void fillListDevices(QListWidget *listWidget) {
+    model_->fillListDevices(listWidget);
+  }
 
- protected:
  private:
   Model *model_;
 };

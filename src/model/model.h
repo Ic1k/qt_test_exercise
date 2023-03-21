@@ -14,6 +14,7 @@ class Model {
   Model() {}
 
   void connectdb(QSqlDatabase *db);
+  void fillListDevices(QListWidget *listWidget);
   void fillListProcess(QListWidget *listProcess, QString deviceName);
   void fillListPdfBin(QListWidget *listPdf, QListWidget *listBin,
                       QString deviceName, QString processName);
@@ -23,7 +24,6 @@ class Model {
   int getprocessId(QString processName);
   int getfilesId();
 
- protected:
  private:
 };
 }  // namespace vega

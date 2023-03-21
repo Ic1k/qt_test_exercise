@@ -22,6 +22,15 @@ void Model::connectdb(QSqlDatabase *db) {
   db->setConnectOptions("MYSQL_OPT_RECONNECT=1");
 }
 
+void Model::fillListDevices(QListWidget *listWidget) {
+  QSqlQuery queryDevice;
+  queryDevice.prepare("SELECT name FROM devices");
+  queryDevice.exec();
+  while (queryDevice.next()) {
+    QString name = queryDevice.value(0).toString();
+    listWidget->addItem(name);
+  }
+}
 void Model::fillListProcess(QListWidget *listProcess, QString deviceName) {
   QSqlQuery queryProcess;
   queryProcess.prepare(
