@@ -36,11 +36,11 @@ void Model::fillListProcess(QListWidget *listProcess, QString deviceName) {
   QSqlQuery queryProcess;
   queryProcess.prepare(
       "SELECT p.name \
-             from data\
-             join processes p on data.process_id = p.id \
-             join devices d on data.device_id = d.id \
-            where d.name = ? \
-            group by p.name;");
+         from data\
+         join processes p on data.process_id = p.id \
+         join devices d on data.device_id = d.id \
+        where d.name = ? \
+        group by p.name;");
   queryProcess.addBindValue(deviceName);
   queryProcess.exec();
   while (queryProcess.next()) {
@@ -54,11 +54,11 @@ void Model::fillListPdfBin(QListWidget *listPdf, QListWidget *listBin,
   QSqlQuery queryPdf;
   queryPdf.prepare(
       "SELECT f.name \
-                        from data \
-                         join processes p on data.process_id = p.id \
-                         join devices d on data.device_id = d.id \
-                         join files f on f.id = data.file_id \
-                         where d.name = ? AND p.name = ? AND f.name LIKE '%pdf'");
+         from data \
+         join processes p on data.process_id = p.id \
+         join devices d on data.device_id = d.id \
+         join files f on f.id = data.file_id \
+        where d.name = ? AND p.name = ? AND f.name LIKE '%pdf'");
   queryPdf.addBindValue(deviceName);
   queryPdf.addBindValue(processName);
   queryPdf.exec();
@@ -71,11 +71,11 @@ void Model::fillListPdfBin(QListWidget *listPdf, QListWidget *listBin,
   QSqlQuery queryBin;
   queryBin.prepare(
       "SELECT f.name \
-                      from data \
-                       join processes p on data.process_id = p.id \
-                       join devices d on data.device_id = d.id \
-                       join files f on f.id = data.file_id \
-                       where d.name = ? AND p.name = ? AND f.name LIKE '%bin'");
+         from data \
+         join processes p on data.process_id = p.id \
+         join devices d on data.device_id = d.id \
+         join files f on f.id = data.file_id \
+        where d.name = ? AND p.name = ? AND f.name LIKE '%bin'");
   queryBin.addBindValue(deviceName);
   queryBin.addBindValue(processName);
   queryBin.exec();
@@ -115,8 +115,8 @@ int Model::getdeviceId(QString deviceName) {
   QSqlQuery queryDeviceId;
   queryDeviceId.prepare(
       "select id \
-           from devices \
-          where name = :name");
+         from devices \
+        where name = :name");
   queryDeviceId.bindValue(":name", deviceName);
   queryDeviceId.exec();
   if (queryDeviceId.next()) {
@@ -130,8 +130,8 @@ int Model::getprocessId(QString processName) {
   QSqlQuery queryProcessId;
   queryProcessId.prepare(
       "select id \
-           from processes \
-          where name = :name");
+         from processes \
+        where name = :name");
   queryProcessId.bindValue(":name", processName);
   queryProcessId.exec();
   if (queryProcessId.next()) {
@@ -145,7 +145,7 @@ int Model::getfilesId() {
   QSqlQuery queryFilesId;
   queryFilesId.prepare(
       "select max(id) \
-           from files");
+         from files");
   queryFilesId.exec();
   if (queryFilesId.next()) {
     filesId = queryFilesId.value(0).toInt();
