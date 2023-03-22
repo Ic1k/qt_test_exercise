@@ -36,24 +36,24 @@ CREATE TABLE data
 
 
 INSERT INTO devices(name)
-VALUES ("BMK - 4"),
-       ("BMK - 6"),
-       ("MT - 23"),
-       ("MT - 24");
+VALUES ('BMK - 4'),
+       ('BMK - 6'),
+       ('MT - 23'),
+       ('MT - 24');
 
 INSERT INTO processes(name)
-VALUES ("soldering"),
-       ("testing"),
-       ("packaging");
+VALUES ('soldering'),
+       ('testing'),
+       ('packaging');
 
 INSERT INTO files(name)
-VALUES ("firmware_vmk4.bin"),
-       ("firmware_vmk6.bin"),
-       ("firmware_mt23.bin"),
-       ("firmware_mt24.bin"),
-       ("1A5-CITC.pdf"),
-       ("instr_ot_001doc.pdf"),
-       ("N26-OH.pdf");
+VALUES ('firmware_vmk4.bin'),
+       ('firmware_vmk6.bin'),
+       ('firmware_mt23.bin'),
+       ('firmware_mt24.bin'),
+       ('1A5-CITC.pdf'),
+       ('instr_ot_001doc.pdf'),
+       ('N26-OH.pdf');
 
 INSERT INTO data(device_id, process_id, file_id)
 VALUES (1, 1, 5),

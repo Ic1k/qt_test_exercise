@@ -12,11 +12,12 @@ void Model::connectdb(QSqlDatabase *db) {
   QString user = settings.value("mysql/user", "root").toString();
   QString password = settings.value("mysql/password", "").toString();
   QString database = settings.value("mysql/database", "test").toString();
+  int port = settings.value("mysql/port", "").toInt();
 
   *db = QSqlDatabase::addDatabase("QMYSQL");
   db->setDatabaseName(database);
   db->setHostName(host);
-  db->setPort(3306);
+  db->setPort(port);
   db->setUserName(user);
   db->setPassword(password);
   db->setConnectOptions("MYSQL_OPT_RECONNECT=1");
@@ -99,9 +100,6 @@ void Model::insertFilesToData(QString deviceName, QString processName,
   int deviceId = getdeviceId(deviceName);
   int processId = getprocessId(processName);
   int filesId = getfilesId();
-  // qDebug() << deviceId;
-  //  qDebug() << processId;
-  //   qDebug() << filesId;
   QSqlQuery query;
   query.prepare(
       "INSERT INTO data (device_id, process_id, file_id) \

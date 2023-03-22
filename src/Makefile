@@ -1,4 +1,4 @@
-all: clean build  run
+all: clean build 
 
 run:
 	cd build; ./Vega_absolut
